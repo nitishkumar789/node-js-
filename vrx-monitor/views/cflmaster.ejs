@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="block">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="d-block d-sm-flex justify-content-around align-items-center"
+            >
+              <a href="participant" class="btn btn-info w-100 m-1"
+                >Participants Information</a
+              >
+              <a href="block" class="btn btn-info w-100 m-1"
+                >Block master (Address)</a
+              >
+              <a href="activity" class="btn btn-info w-100 m-1"
+                >Activity Master</a
+              >
+              <a href="personel" class="btn btn-info w-100 m-1"
+                >Personnel Master Fi...</a
+              >
+              <a href="personelmaster" class="btn btn-info w-100 m-1"
+                >Peronnel master Ar...</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 m-auto">
+            <div class="card p-3 my-5 shadow">
+              <h3 class="text-center">CFL Master</h3>
+              <form method="POST" action="/cflmaster">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label>CFL Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="CFL_Name"
+                      name="name"
+                      onkeyup="validateCFL_Name()"
+                      autocomplete="off"
+                      required
+                      placeholder="CFL Name"
+                    />
+                    <div id="CFL_Namediv" class="position-absolute style"></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>District</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="District"
+                      name="district"
+                      onkeyup="validateDistrict()"
+                      autocomplete="off"
+                      required
+                      placeholder="District"
+                    />
+                    <div id="Districtdiv" class="position-absolute style"></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Village</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="Village"
+                      name="village"
+                      onkeyup="validateVillage()"
+                      required
+                      placeholder="Village"
+                    />
+                    <div id="Villagediv" class="position-absolute style"></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Block Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="block_name"
+                      id="blockName"
+                      onkeyup="validateblockName()"
+                      required
+                      placeholder="Block Name"
+                    />
+                    <div id="blockNamediv" class="position-absolute style"></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>UTJ&K</label>
+                    <select class="form-control" name="ut_jk" required>
+                      <option value="0">Yes</option>
+                      <option value="1">No</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-md-6 align-items-end d-flex">
+                    <input
+                      type="submit"
+                      name="submit"
+                      id="submit"
+                      class="btn btn-success w-100"
+                      value="Submit"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <table id="transaction_tb" class="table tbinfo">
+          <thead id="thd" class="bg-light">
+            <tr>
+              <th>Sr No</th>
+              <th>Cfl Name</th>
+              <th>Village</th>
+              <th>District</th>
+              <th>UT J&K</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="transaction_div_dnld">
+            <% if (list) { %> <% for(var i = 0; i < list.length; i++) { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= list[i].name %></td>
+              <td><%= list[i].village %></td>
+              <td><%= list[i].block_name %></td>
+              <td><%= list[i].district %></td>
+              <td>
+                <form
+                  onSubmit="if(!confirm('Are you sure?')){return false;}"
+                  action="#"
+                  method="post"
+                >
+                  <button type="submit" class="btn btn-sm btn-primary trigger">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% } %> <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+     <script type="text/javascript">
+      //name
+    $(function() {
+      $("input[CFL_Name='CFL_Name']").on('input', function(e) {
+        console.log('==>' , $(this).val().charAt(3))
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+        });
+    });
+    $(document).ready(function() {
+        $('#CFL_Name').on('keypress', function(e) {
+            var regex = new RegExp("^[a-zA-Z ]*$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            if (regex.test(str)) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+    });
+    var text = document.getElementById("CFL_Name").value.replace (/ +/g, " ");
+    const fCFL_Name = document.querySelector('#CFL_Name');
+        fCFL_Name.addEventListener('input', () => {
+          fCFL_Name.value = fCFL_Name.value ? fCFL_Name.value.trimStart() : '';
+        })
+    function validateCFL_Name(){
+    var nm = document.getElementById('CFL_Name').value;
+    var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+    if(pattern.test(nm) == false || nm == " ")
+    {
+    document.getElementById("CFL_Name").value.replace(/\s+/g, " ");
+    document.getElementById('CFL_Namediv').innerHTML = "Not valid CFL_Name";
+    document.getElementById('CFL_Namediv').style.color = "red";
+    return false;
+    }
+    else
+    {
+    document.getElementById('CFL_Namediv').innerHTML = "";
+    document.getElementById('CFL_Namediv').style.color = "";
+    return true;
+    }
+    }
+
+    //District
+    $(function() {
+      $("input[District='District']").on('input', function(e) {
+        console.log('==>' , $(this).val().charAt(3))
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+        });
+    });
+    $(document).ready(function() {
+        $('#District').on('keypress', function(e) {
+            var regex = new RegExp("^[a-zA-Z ]*$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            if (regex.test(str)) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+    });
+    var text = document.getElementById("District").value.replace (/ +/g, " ");
+    const fDistrict = document.querySelector('#District');
+        fDistrict.addEventListener('input', () => {
+          fDistrict.value = fDistrict.value ? fDistrict.value.trimStart() : '';
+        })
+    function validateDistrict(){
+    var nm = document.getElementById('District').value;
+    var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+    if(pattern.test(nm) == false || nm == " ")
+    {
+    document.getElementById("District").value.replace(/\s+/g, " ");
+    document.getElementById('Districtdiv').innerHTML = "Not valid District";
+    document.getElementById('Districtdiv').style.color = "red";
+    return false;
+    }
+    else
+    {
+    document.getElementById('Districtdiv').innerHTML = "";
+    document.getElementById('Districtdiv').style.color = "";
+    return true;
+    }
+    }
+    $('#CFL_Name, #District, #Village').on('input', function(){
+      validateForm();
+    });
+    function validateForm(){
+      var nameIsValid = validatename();
+      var locationIsValid = validatelocation();
+      if(nameIsValid && locationIsValid){
+        $('#submit').prop('disabled', false);
+      } else{
+        $('#submit').prop('disabled', true);
+      }
+    }
+
+    //Village
+    $(function() {
+      $("input[Village='Village']").on('input', function(e) {
+        console.log('==>' , $(this).val().charAt(3))
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+        });
+    });
+    $(document).ready(function() {
+        $('#Village').on('keypress', function(e) {
+            var regex = new RegExp("^[a-zA-Z ]*$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            if (regex.test(str)) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+    });
+    var text = document.getElementById("Village").value.replace (/ +/g, " ");
+    const fVillage = document.querySelector('#Village');
+        fVillage.addEventListener('input', () => {
+          fVillage.value = fVillage.value ? fVillage.value.trimStart() : '';
+        })
+    function validateVillage(){
+    var nm = document.getElementById('Village').value;
+    var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+    if(pattern.test(nm) == false || nm == " ")
+    {
+    document.getElementById("Village").value.replace(/\s+/g, " ");
+    document.getElementById('Villagediv').innerHTML = "Not valid Village";
+    document.getElementById('Villagediv').style.color = "red";
+    return false;
+    }
+    else
+    {
+    document.getElementById('Villagediv').innerHTML = "";
+    document.getElementById('Villagediv').style.color = "";
+    return true;
+    }
+    }
+
+    //name
+    $(function() {
+      $("input[blockName='blockName']").on('input', function(e) {
+        console.log('==>' , $(this).val().charAt(3))
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+        });
+    });
+    $(document).ready(function() {
+        $('#blockName').on('keypress', function(e) {
+            var regex = new RegExp("^[a-zA-Z ]*$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            if (regex.test(str)) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+    });
+    var text = document.getElementById("blockName").value.replace (/ +/g, " ");
+    const fblockName = document.querySelector('#blockName');
+        fblockName.addEventListener('input', () => {
+          fblockName.value = fblockName.value ? fblockName.value.trimStart() : '';
+        })
+    function validateblockName(){
+    var nm = document.getElementById('blockName').value;
+    var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+    if(pattern.test(nm) == false || nm == " ")
+    {
+    document.getElementById("blockName").value.replace(/\s+/g, " ");
+    document.getElementById('blockNamediv').innerHTML = "Not valid blockName";
+    document.getElementById('blockNamediv').style.color = "red";
+    return false;
+    }
+    else
+    {
+    document.getElementById('blockNamediv').innerHTML = "";
+    document.getElementById('blockNamediv').style.color = "";
+    return true;
+    }
+    }
+
+    $('#CFL_Name, #District, #Village, #blockName').on('input', function(){
+      validateForm();
+    });
+
+    function validateForm(){
+      var CFL_NameIsValid = validateCFL_Name();
+      var DistrictIsValid = validateDistrict();
+      var VillageIsValid = validateVillage();
+      var blockNameIsValid = validateblockName();
+
+      if(CFL_NameIsValid && DistrictIsValid && VillageIsValid && blockNameIsValid){
+        $('#submit').prop('disabled', false);
+      } else{
+        $('#submit').prop('disabled', true);
+      }
+    }
+
+    </script>
+  </body>
+</html>

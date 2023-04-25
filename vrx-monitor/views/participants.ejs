@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="block">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="d-block d-sm-flex justify-content-around align-items-center"
+            >
+              <a href="participant" class="btn btn-info w-100 m-1"
+                >Participants Information</a
+              >
+              <a href="block" class="btn btn-info w-100 m-1"
+                >Block master (Address)</a
+              >
+              <a href="activity" class="btn btn-info w-100 m-1"
+                >Activity Master</a
+              >
+              <a href="personel" class="btn btn-info w-100 m-1"
+                >Personnel Master Fi...</a
+              >
+              <a href="personelmaster" class="btn btn-info w-100 m-1"
+                >Peronnel master Ar...</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card p-3 mt-5 shadow">
+              <h3 class="text-center">Participants Information</h3>
+              <form
+                action="participantsinfo"
+                method="POST"
+                id="participantsinfo"
+              >
+                <div class="card border-0">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Date</label>
+                        <input
+                          type="Date"
+                          class="form-control"
+                          name="date"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Block</label>
+                        <select
+                          class="form-control mr-2 gender a required"
+                          name="block_id"
+                          required
+                        >
+                          <option value="" name="Block">Block</option>
+                          <% if (blocks) { %> <% for(var i = 0; i <
+                          blocks.length; i++) { %>
+                          <option value="<%= blocks[i].id %>" id="Block">
+                            <%= blocks[i].name %>
+                          </option>
+                          <% } %> <% } %>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Village</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="village"
+                          id="village"
+                          onkeyup="validatevillage()"
+                          autocomplete="off"
+                          required
+                        />
+                        <div id="villagediv" class="position-absolute"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Full Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="full_name"
+                          id="fullname"
+                          onkeyup="validatefullname()"
+                          autocomplete="off"
+                          required
+                        />
+                        <div id="fullnamediv" class="position-absolute"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="d-block">Gender</label>
+                        <div class="form-check form-check-inline mr-1">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="exampleRadios1"
+                            value="0"
+                            required
+                            checked
+                          />
+                          <label class="form-check-label" for="exampleRadios1">
+                            Male
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline mr-1">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="exampleRadios11"
+                            value="1"
+                          />
+                          <label class="form-check-label" for="exampleRadios11">
+                            Female
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline mr-1">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="exampleRadios21"
+                            value="2"
+                          />
+                          <label class="form-check-label" for="exampleRadios21">
+                            Transgender
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Father/Husbands Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="guardian_name"
+                          id="guardianname"
+                          onkeyup="validateguardianname()"
+                          autocomplete="off"
+                          required
+                        />
+                        <div
+                          id="guardiannamediv"
+                          class="position-absolute"
+                        ></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Age</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="age"
+                          id="age"
+                          onkeyup="validateage()"
+                        />
+                        <div id="agediv" class="position-absolute"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Occupation</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="occupation"
+                          id="occupation"
+                          onkeyup="validateoccupation()"
+                          autocomplete="off"
+                          required
+                        />
+                        <div id="occupationdiv" class="position-absolute"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="d-block">Education</label>
+                        <div class="form-check form-check-inline mr-0">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="education"
+                            id="exampleRadios01"
+                            value="Nil"
+                            required
+                          />
+                          <label class="form-check-label" for="exampleRadios01">
+                            Nil
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline mr-0">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="education"
+                            id="exampleRadios02"
+                            value="8th"
+                          />
+                          <label class="form-check-label" for="exampleRadios02">
+                            8th
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline mr-0">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="education"
+                            id="exampleRadios03"
+                            value="12th"
+                          />
+                          <label class="form-check-label" for="exampleRadios03">
+                            12th
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline mr-0">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="education"
+                            id="exampleRadios04"
+                            value="Graduation"
+                            checked
+                          />
+                          <label class="form-check-label" for="exampleRadios04">
+                            Graduation
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Mobile No.</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="mobile"
+                          id="mobile"
+                          onkeyup="validatemobile()"
+                          autocomplete="off"
+                          maxlength="10"
+                        />
+                        <div id="mobilediv" class="position-absolute"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Monthly Household Expenditure</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="monthly_household_expenditure"
+                          id="house"
+                          onkeyup="validatehouse()"
+                          autocomplete="off"
+                        />
+                        <div id="housediv" class="position-absolute"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label> Participant Requirement</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="participants_requirement"
+                          id="participantRequirement"
+                          onkeyup="validateparticipantRequirement()"
+                          autocomplete="off"
+                        />
+                        <div
+                          id="participantRequirementdiv"
+                          class="position-absolute"
+                        ></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label> Activity id</label>
+                        <select class="form-control" name="activity_id" required>
+                          <option value="">---- Select Activity ----</option>
+                          <!-- <option value="2">Activity 2</option>
+                          <option value="3">Activity 3</option> -->
+                          <% if (activity) { %> <% for(var i = 0; i <
+                          activity.length; i++) { %>
+                          <option value="<%= activity[i].id %>" id="Block">
+                            <%= activity[i].state %>/<%= activity[i].district %>/<%= activity[i].gram_panchayat %>
+                          </option>
+                          <% } %> <% } %>
+                        </select>
+                      </div>
+                    </div>
+                    <% if (form) { %> <% for(var i = 0; i < form.length; i++) {
+                    %>
+                    <div class="col-md-6 mb-2">
+                      <label><%= form[i] %> </label>
+                      <div class="row no-gutters p-2 border align-items-center">
+                        <div class="col-md-2">
+                          <div class="form-group mb-2 mb-sm-0">
+                            <div class="form-check form-check-inline mr-0">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="yesno_<%= i+1 %>"
+                                id="exampleRadioYes<%= i+1 %>"
+                                value="1"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="exampleRadioYes<%= i+1 %>"
+                              >
+                                Yes
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline mr-0">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="yesno_<%= i+1 %>"
+                                id="exampleRadioNo<%= i+1 %>"
+                                value="0"
+                                checked
+                              />
+                              <label
+                                class="form-check-label"
+                                for="exampleRadioNo<%= i+1 %>"
+                              >
+                                No
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group mb-2 mb-sm-0 mx-0 mx-sm-2">
+                            <input
+                              type="date"
+                              class="form-control"
+                              name="fields_date_<%= i+1 %>"
+                              placeholder="Enter Date"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mb-2 mb-sm-0">
+                            <textarea
+                              class="form-control"
+                              rows="1"
+                              name="fields_coments_<%= i+1 %>"
+                              id="comment"
+                              autocomplete="off"
+                              placeholder="Enter Your Comment..."
+                            ></textarea>
+                            <div
+                              id="commentdiv"
+                              class="position-absolute"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% } %> <% } %>
+                    <div
+                      class="col-md-3 d-flex align-items-end justify-content-between"
+                    >
+                      <div class="form-group w-100 mt-3">
+                        <input
+                          type="submit"
+                          name="submit"
+                          id="submit"
+                          class="btn btn-success w-100"
+                          value="Submit"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="show_table mt-5">
+          <div class="conatiner">
+            <div class="row">
+              <div class="col-md-12 table-responsive">
+                <table id="transaction_tb" class="table tbinfo">
+                  <thead id="thd" class="bg-light">
+                    <tr>
+                      <th>Sr No</th>
+                      <th>date</th>
+                      <th>Block</th>
+                      <th>Village</th>
+                      <th>Full Name</th>
+                      <th>Gender</th>
+                      <th>Guardian Name</th>
+                      <th>Age</th>
+                      <th>Occupation</th>
+                      <th>Education</th>
+                      <th>Mobile</th>
+                      <th>Monthly Household Expenditure</th>
+                      <th>Participants Requirement</th>
+                      <th>Activity</th>
+                      <th>Subsection</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transaction_div_dnld">
+                    <% if (list) { %> <% for(var i = 0; i < list.length; i++)
+                    {%>
+                    <tr>
+                      <td><%= i+1 %></td>
+                      <td><%=new Date(list[i].date).toISOString().replace("T"," ").substring(0,16); %></td>
+                      <td><%= list[i].block_name %></td>
+                      <td><%= list[i].village %></td>
+                      <td><%= list[i].full_name %></td>
+                      <td>
+                        <%= list[i].gender == 0 ? 'Male' : list[i].gender == 1 ? 'Female' : 'Transgender' %>
+                      </td>
+                      <td><%= list[i].guardian_name %></td>
+                      <td><%= list[i].age %></td>
+                      <td><%= list[i].occupation %></td>
+                      <td><%= list[i].education %></td>
+                      <td><%= list[i].mobile %></td>
+                      <td><%= list[i].monthly_household_expenditure %></td>
+                      <td><%= list[i].participants_requirement %></td>
+                      <td><%= list[i].activity_state %>/<%= list[i].activity_district %>/<%= list[i].activity_gram_panchayat %></td>
+                      <td>dshfsugsd</td>
+                      <td>
+                        <form
+                          onSubmit="if(!confirm('Are you sure?')){return false;}"
+                          action="#"
+                          method="post"
+                        >
+                          <button
+                            type="submit"
+                            class="btn btn-sm btn-primary trigger"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% } %> <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    //village
+    const cfl = document.querySelector("#village");
+    cfl.addEventListener("input", () => {
+      cfl.value = cfl.value ? cfl.value.trimStart() : "";
+    });
+    function validatevillage() {
+      var add = document.getElementById("village").value;
+      if (add == "") {
+        document.getElementById("villagediv").innerHTML = "Enter village";
+        document.getElementById("villagediv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("villagediv").innerHTML = "";
+        document.getElementById("villagediv").style.color = "";
+        return true;
+      }
+    }
+
+    //fullname
+    $(function () {
+      $("input[fullname='fullname']").on("input", function (e) {
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+      });
+    });
+    $(document).ready(function () {
+      $("#fullname").on("keypress", function (e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    var text = document.getElementById("fullname").value.replace(/ +/g, " ");
+    const ffullname = document.querySelector("#fullname");
+    ffullname.addEventListener("input", () => {
+      ffullname.value = ffullname.value ? ffullname.value.trimStart() : "";
+    });
+    function validatefullname() {
+      var nm = document.getElementById("fullname").value;
+      var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      if (pattern.test(nm) == false || nm == " ") {
+        document.getElementById("fullname").value.replace(/\s+/g, " ");
+        document.getElementById("fullnamediv").innerHTML = "Not valid fullname";
+        document.getElementById("fullnamediv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("fullnamediv").innerHTML = "";
+        document.getElementById("fullnamediv").style.color = "";
+        return true;
+      }
+    }
+
+    //guardianname
+    $(function () {
+      $("input[guardianname='guardianname']").on("input", function (e) {
+        console.log("==>", $(this).val().charAt(3));
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+      });
+    });
+    $(document).ready(function () {
+      $("#guardianname").on("keypress", function (e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    var text = document
+      .getElementById("guardianname")
+      .value.replace(/ +/g, " ");
+    const fguardianname = document.querySelector("#guardianname");
+    fguardianname.addEventListener("input", () => {
+      fguardianname.value = fguardianname.value
+        ? fguardianname.value.trimStart()
+        : "";
+    });
+    function validateguardianname() {
+      var nm = document.getElementById("guardianname").value;
+      var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      if (pattern.test(nm) == false || nm == " ") {
+        document.getElementById("guardianname").value.replace(/\s+/g, " ");
+        document.getElementById("guardiannamediv").innerHTML =
+          "Not valid guardianname";
+        document.getElementById("guardiannamediv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("guardiannamediv").innerHTML = "";
+        document.getElementById("guardiannamediv").style.color = "";
+        return true;
+      }
+    }
+
+    //age
+    $(document).ready(function () {
+      $("#age").on("keypress", function (e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    const age1 = document.querySelector("#age");
+    age1.addEventListener("input", () => {
+      age1.value = age1.value ? age1.value.trimStart() : "";
+    });
+    function validateage() {
+      var age = document.getElementById("age").value;
+      var pattern = /[0-9]{2}/;
+      if ((pattern.test(age) == false || age == "") && age != 10) {
+        document.getElementById("agediv").innerHTML = "Not valid number";
+        document.getElementById("agediv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("agediv").innerHTML = "";
+        document.getElementById("agediv").style.color = "";
+        return true;
+      }
+    }
+
+    //occupation
+    $(function () {
+      $("input[occupation='occupation']").on("input", function (e) {
+        console.log("==>", $(this).val().charAt(3));
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+      });
+    });
+    $(document).ready(function () {
+      $("#occupation").on("keypress", function (e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    var text = document.getElementById("occupation").value.replace(/ +/g, " ");
+    const foccupation = document.querySelector("#occupation");
+    foccupation.addEventListener("input", () => {
+      foccupation.value = foccupation.value
+        ? foccupation.value.trimStart()
+        : "";
+    });
+    function validateoccupation() {
+      var nm = document.getElementById("occupation").value;
+      var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      if (pattern.test(nm) == false || nm == " ") {
+        document.getElementById("occupation").value.replace(/\s+/g, " ");
+        document.getElementById("occupationdiv").innerHTML =
+          "Not valid occupation";
+        document.getElementById("occupationdiv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("occupationdiv").innerHTML = "";
+        document.getElementById("occupationdiv").style.color = "";
+        return true;
+      }
+    }
+
+    //mobile
+    $(document).ready(function () {
+      $("#mobile").on("keypress", function (e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    const mobile1 = document.querySelector("#mobile");
+    mobile1.addEventListener("input", () => {
+      mobile1.value = mobile1.value ? mobile1.value.trimStart() : "";
+    });
+    function validatemobile() {
+      var mobile = document.getElementById("mobile").value;
+      var pattern = /[9876][0-9]{9}/;
+      if ((pattern.test(mobile) == false || mobile == "") && mobile != 10) {
+        document.getElementById("mobilediv").innerHTML = "Not valid number";
+        document.getElementById("mobilediv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("mobilediv").innerHTML = "";
+        document.getElementById("mobilediv").style.color = "";
+        return true;
+      }
+    }
+
+    //house
+    $(document).ready(function () {
+      $("#house").on("keypress", function (e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    const house1 = document.querySelector("#house");
+    house1.addEventListener("input", () => {
+      house1.value = house1.value ? house1.value.trimStart() : "";
+    });
+    function validatehouse() {
+      var house = document.getElementById("house").value;
+      var pattern = /[0-9]{6}/;
+      if ((pattern.test(house) == false || house == "") && house != 10) {
+        document.getElementById("housediv").innerHTML = "Not valid expenditure";
+        document.getElementById("housediv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("housediv").innerHTML = "";
+        document.getElementById("housediv").style.color = "";
+        return true;
+      }
+    }
+
+    //participantRequirement
+    $(function () {
+      $("input[participantRequirement='participantRequirement']").on(
+        "input",
+        function (e) {
+          console.log("==>", $(this).val().charAt(3));
+          if ($(this).val().indexOf("  ") != -1) {
+            $(this).val($(this).val().replace("  ", " "));
+            // $(this).val($(this).val().replace(".", ""));
+          } else {
+            $(this).val($(this).val().replace(".", ""));
+          }
+        }
+      );
+    });
+    $(document).ready(function () {
+      $("#participantRequirement").on("keypress", function (e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    var text = document
+      .getElementById("participantRequirement")
+      .value.replace(/ +/g, " ");
+    const fparticipantRequirement = document.querySelector(
+      "#participantRequirement"
+    );
+    fparticipantRequirement.addEventListener("input", () => {
+      fparticipantRequirement.value = fparticipantRequirement.value
+        ? fparticipantRequirement.value.trimStart()
+        : "";
+    });
+    function validateparticipantRequirement() {
+      var nm = document.getElementById("participantRequirement").value;
+      var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      if (pattern.test(nm) == false || nm == " ") {
+        document
+          .getElementById("participantRequirement")
+          .value.replace(/\s+/g, " ");
+        document.getElementById("participantRequirementdiv").innerHTML =
+          "Not valid participantRequirement";
+        document.getElementById("participantRequirementdiv").style.color =
+          "red";
+        return false;
+      } else {
+        document.getElementById("participantRequirementdiv").innerHTML = "";
+        document.getElementById("participantRequirementdiv").style.color = "";
+        return true;
+      }
+    }
+
+    //comment
+    $(function () {
+      $("input[comment='comment']").on("input", function (e) {
+        console.log("==>", $(this).val().charAt(3));
+        if ($(this).val().indexOf("  ") != -1) {
+          $(this).val($(this).val().replace("  ", " "));
+          // $(this).val($(this).val().replace(".", ""));
+        } else {
+          $(this).val($(this).val().replace(".", ""));
+        }
+      });
+    });
+    $(document).ready(function () {
+      $("#comment").on("keypress", function (e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+    });
+    var text = document.getElementById("comment").value.replace(/ +/g, " ");
+    const fcomment = document.querySelector("#comment");
+    fcomment.addEventListener("input", () => {
+      fcomment.value = fcomment.value ? fcomment.value.trimStart() : "";
+    });
+    function validatecomment() {
+      var nm = document.getElementById("comment").value;
+      var pattern = /^[a-zA-Z]{30,}(?: [a-zA-Z]+){0,2}$/;
+      if (pattern.test(nm) == false || nm == " ") {
+        document.getElementById("comment").value.replace(/\s+/g, " ");
+        document.getElementById("commentdiv").innerHTML = "Not valid comment";
+        document.getElementById("commentdiv").style.color = "red";
+        return false;
+      } else {
+        document.getElementById("commentdiv").innerHTML = "";
+        document.getElementById("commentdiv").style.color = "";
+        return true;
+      }
+    }
+
+    $(
+      "#village, #fullname, #guardianname, #age, #occupation, #mobile, #house, #participantRequirement"
+    ).on("input", function () {
+      validateForm();
+    });
+    function validateForm() {
+      var villageIsValid = validatevillage();
+      var fullnameIsValid = validatefullname();
+      var guardiannameIsValid = validateguardianname();
+      var ageIsValid = validateage();
+      var occupationIsValid = validateoccupation();
+      var mobileIsValid = validatemobile();
+      var houseIsValid = validatehouse();
+      var participantrequiremantIsValid = validateparticipantRequirement();
+      // var commentIsValid = validatecomment();
+
+      if (
+        villageIsValid &&
+        fullnameIsValid &&
+        guardiannameIsValid &&
+        ageIsValid &&
+        occupationIsValid &&
+        mobileIsValid &&
+        houseIsValid &&
+        participantrequiremantIsValid 
+      ) {
+        $("#submit").prop("disabled", false);
+      } else {
+        $("#submit").prop("disabled", true);
+      }
+    }
+  </script>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="block">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="d-block d-sm-flex justify-content-around align-items-center"
+            >
+              <a href="participant" class="btn btn-info w-100 m-1"
+                >Participants Information</a
+              >
+              <a href="block" class="btn btn-info w-100 m-1"
+                >Block master (Address)</a
+              >
+              <a href="activity" class="btn btn-info w-100 m-1"
+                >Activity Master</a
+              >
+              <a href="personel" class="btn btn-info w-100 m-1"
+                >Personnel Master Fi...</a
+              >
+              <a href="personelmaster" class="btn btn-info w-100 m-1"
+                >Peronnel master Ar...</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 m-auto">
+            <div class="card p-3 my-5 shadow">
+              <h3 class="text-center">Campaign Master</h3>
+              <form method="POST" action="/campaignmaster">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label>Campaign Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Campaign Name"
+                      id="name"
+                      name="name"
+                      autocomplete="off"
+                      required
+                    />
+                    <div id="namediv" class="position-absolute style"></div>
+                  </div>
+
+                  <!-- <div class="form-group col-md-6">
+                    <label>Locations</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="location"
+                      name="location_name"
+                      onkeyup="validatelocation()"
+                      autocomplete="off"
+                      required
+                    />
+                    <div id="locationdiv" class="position-absolute style"></div>
+                  </div> -->
+
+                  
+
+                  <div class="form-group col-md-6">
+                    <label>Location</label>
+                    <select class="form-control" name="location">
+                      <option value="">----</option>
+                      <% if (blocks) { %> <% for(var i = 0; i < blocks.length;
+                      i++) { %>
+                      <option value="<%= blocks[i].id %>" id="Block">
+                        <%= blocks[i].name %>
+                      </option>
+                      <% } %> <% } %>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label>Start Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      name="start_date"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label>End Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      name="end_date"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group col-md-6 align-items-end d-flex">
+                    <input
+                      type="submit"
+                      name="submit"
+                      id="submit"
+                      class="btn btn-success w-100"
+                      value="Submit"
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <table id="transaction_tb" class="table tbinfo">
+          <thead id="thd" class="bg-light">
+            <tr>
+              <th>Sr No.</th>
+              <th>Name</th>
+              <th>Locations</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="transaction_div_dnld">
+            <% if (list) { %> <% for(var i = 0; i < list.length; i++) { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= list[i].name %></td>
+              <td><%= list[i].location %></td>
+              <td><%= new Date(list[i].start_date).toISOString().replace("T"," ").substring(0, 16); %></td>
+              <td><%= new Date(list[i].end_date).toISOString().replace("T"," ").substring(0, 16); %></td>
+              <td>
+                <form
+                  onSubmit="if(!confirm('Are you sure?')){return false;}"
+                  action="#"
+                  method="post"
+                >
+                  <button type="submit" class="btn btn-sm btn-primary trigger">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% } %> <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $(function () {
+        $("input[name='name']").on("input", function (e) {
+          if ($(this).val().indexOf("  ") != -1) {
+            $(this).val($(this).val().replace("  ", " "));
+          } else {
+            $(this).val($(this).val().replace(".", ""));
+          }
+        });
+      });
+      $(document).ready(function () {
+        $("#name").on("keypress", function (e) {
+          var regex = new RegExp("^[a-zA-Z ]*$");
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+          if (regex.test(str)) {
+            return true;
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+      var text = document.getElementById("name").value.replace(/ +/g, " ");
+      const fname = document.querySelector("#name");
+      fname.addEventListener("input", () => {
+        fname.value = fname.value ? fname.value.trimStart() : "";
+      });
+      function validatename() {
+        var nm = document.getElementById("name").value;
+        var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+        if (pattern.test(nm) == false || nm == " ") {
+          document.getElementById("name").value.replace(/\s+/g, " ");
+          document.getElementById("namediv").innerHTML = "Not valid name";
+          document.getElementById("namediv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("namediv").innerHTML = "";
+          document.getElementById("namediv").style.color = "";
+          return true;
+        }
+      }
+
+      //location
+      $(function () {
+        $("input[location='location']").on("input", function (e) {
+          console.log("==>", $(this).val().charAt(3));
+          if ($(this).val().indexOf("  ") != -1) {
+            $(this).val($(this).val().replace("  ", " "));
+          } else {
+            $(this).val($(this).val().replace(".", ""));
+          }
+        });
+      });
+      $(document).ready(function () {
+        $("#location").on("keypress", function (e) {
+          var regex = new RegExp("^[a-zA-Z ]*$");
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+          if (regex.test(str)) {
+            return true;
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+      var text = document.getElementById("location").value.replace(/ +/g, " ");
+      const flocation = document.querySelector("#location");
+      flocation.addEventListener("input", () => {
+        flocation.value = flocation.value ? flocation.value.trimStart() : "";
+      });
+      function validatelocation() {
+        var nm = document.getElementById("location").value;
+        var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+        if (pattern.test(nm) == false || nm == " ") {
+          document.getElementById("location").value.replace(/\s+/g, " ");
+          document.getElementById("locationdiv").innerHTML =
+            "Not valid location";
+          document.getElementById("locationdiv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("locationdiv").innerHTML = "";
+          document.getElementById("locationdiv").style.color = "";
+          return true;
+        }
+      }
+      $("#name, #location").on("input", function () {
+        validateForm();
+      });
+
+      function validateForm() {
+        var nameIsValid = validatename();
+        var locationIsValid = validatelocation();
+        if (nameIsValid && locationIsValid) {
+          $("#submit").prop("disabled", false);
+        } else {
+          $("#submit").prop("disabled", true);
+        }
+      }
+    </script>
+  </body>
+</html>

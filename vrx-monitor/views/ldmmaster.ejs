@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="block">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="d-block d-sm-flex justify-content-around align-items-center"
+            >
+              <a href="participant" class="btn btn-info w-100 m-1"
+                >Participants Information</a
+              >
+              <a href="block" class="btn btn-info w-100 m-1"
+                >Block master (Address)</a
+              >
+              <a href="activity" class="btn btn-info w-100 m-1"
+                >Activity Master</a
+              >
+              <a href="personel" class="btn btn-info w-100 m-1"
+                >Personnel Master Fi...</a
+              >
+              <a href="personelmaster" class="btn btn-info w-100 m-1"
+                >Peronnel master Ar...</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 m-auto">
+            <div class="card p-3 my-5 shadow">
+              <h3 class="text-center">LDM Master</h3>
+              <form method="POST" action="/ldmmaster">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label>Blocks</label>
+                    <select class="form-control" required>
+                      <option value="" name="Block">Block</option>
+                      <% if (blocks) { %> <% for(var i = 0; i < blocks.length;
+                      i++) { %>
+                      <option value="<%= blocks[i].id %>" id="Block">
+                        <%= blocks[i].name %>
+                      </option>
+                      <% } %> <% } %>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>LDM Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="LDM_Name"
+                      name="ldm_name"
+                      onkeyup="validateLDM_Name()"
+                      autocomplete="off"
+                      required
+                      placeholder="LDM Name"
+                    />
+                    <div id="LDM_Namediv" class="position-absolute style"></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>LDM Sponsor Bank</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ldm_sponsor_bank"
+                      id="bank"
+                      onkeyup="validatebank()"
+                      required
+                      placeholder="LDM Sponsor Bank"
+                    />
+                    <div id="bankdiv" class="position-absolute style"></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Contact Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="contact_no"
+                      id="number"
+                      onkeyup="validatenumber()"
+                      maxlength="10"
+                      required
+                      placeholder="Contact Number"
+                    />
+                    <div id="numberdiv" class="position-absolute"></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Address</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="address"
+                      id="address"
+                      onkeyup="validateaddress()"
+                      required
+                      placeholder="Address"
+                    />
+                    <div id="addressdiv" class="position-absolute"></div>
+                  </div>
+
+                  <div class="form-group col-md-6 align-items-end d-flex">
+                    <input
+                      type="submit"
+                      name="submit"
+                      id="submit"
+                      class="btn btn-success w-100"
+                      value="Submit"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <table id="transaction_tb" class="table tbinfo">
+          <thead id="thd" class="bg-light">
+            <tr>
+              <th>Sr No</th>
+              <th>Block</th>
+              <th>LDM Name</th>
+              <th>LDM Sponsor Bank</th>
+              <th>Contact No</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="transaction_div_dnld">
+            <% if (list) { %> <% for(var i = 0; i < list.length; i++) { %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= list[i].block_id %></td>
+              <td><%= list[i].ldm_name %></td>
+              <td><%= list[i].ldm_sponsor_bank %></td>
+              <td><%= list[i].contact_no %></td>
+              <td><%= list[i].address %></td>
+              <td>
+                <form
+                  onSubmit="if(!confirm('Are you sure?')){return false;}"
+                  action="#"
+                  method="post"
+                >
+                  <button type="submit" class="btn btn-sm btn-primary trigger">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% } %> <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script type="text/javascript">
+      // ldm name
+      $(function () {
+        $("input[LDM_Name='LDM_Name']").on("input", function (e) {
+          console.log("==>", $(this).val().charAt(3));
+          if ($(this).val().indexOf("  ") != -1) {
+            $(this).val($(this).val().replace("  ", " "));
+            // $(this).val($(this).val().replace(".", ""));
+          } else {
+            $(this).val($(this).val().replace(".", ""));
+          }
+        });
+      });
+      $(document).ready(function () {
+        $("#LDM_Name").on("keypress", function (e) {
+          var regex = new RegExp("^[a-zA-Z ]*$");
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+          if (regex.test(str)) {
+            return true;
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+      var text = document.getElementById("LDM_Name").value.replace(/ +/g, " ");
+      const fLDM_Name = document.querySelector("#LDM_Name");
+      fLDM_Name.addEventListener("input", () => {
+        fLDM_Name.value = fLDM_Name.value ? fLDM_Name.value.trimStart() : "";
+      });
+      function validateLDM_Name() {
+        var nm = document.getElementById("LDM_Name").value;
+        var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+        if (pattern.test(nm) == false || nm == " ") {
+          document.getElementById("LDM_Name").value.replace(/\s+/g, " ");
+          document.getElementById("LDM_Namediv").innerHTML =
+            "Not valid LDM_Name";
+          document.getElementById("LDM_Namediv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("LDM_Namediv").innerHTML = "";
+          document.getElementById("LDM_Namediv").style.color = "";
+          return true;
+        }
+      }
+
+      // bank
+      $(function () {
+        $("input[bank='bank']").on("input", function (e) {
+          console.log("==>", $(this).val().charAt(3));
+          if ($(this).val().indexOf("  ") != -1) {
+            $(this).val($(this).val().replace("  ", " "));
+            // $(this).val($(this).val().replace(".", ""));
+          } else {
+            $(this).val($(this).val().replace(".", ""));
+          }
+        });
+      });
+      $(document).ready(function () {
+        $("#bank").on("keypress", function (e) {
+          var regex = new RegExp("^[a-zA-Z ]*$");
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+          if (regex.test(str)) {
+            return true;
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+      var text = document.getElementById("bank").value.replace(/ +/g, " ");
+      const fbank = document.querySelector("#bank");
+      fbank.addEventListener("input", () => {
+        fbank.value = fbank.value ? fbank.value.trimStart() : "";
+      });
+      function validatebank() {
+        var nm = document.getElementById("bank").value;
+        var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+        if (pattern.test(nm) == false || nm == " ") {
+          document.getElementById("bank").value.replace(/\s+/g, " ");
+          document.getElementById("bankdiv").innerHTML = "Not valid bank";
+          document.getElementById("bankdiv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("bankdiv").innerHTML = "";
+          document.getElementById("bankdiv").style.color = "";
+          return true;
+        }
+      }
+
+      //contact
+      $(document).ready(function () {
+        $("#number").on("keypress", function (e) {
+          var regex = new RegExp("^[0-9]+$");
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+          if (regex.test(str)) {
+            return true;
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+      const number1 = document.querySelector("#number");
+      number1.addEventListener("input", () => {
+        number1.value = number1.value ? number1.value.trimStart() : "";
+      });
+      function validatenumber() {
+        var number = document.getElementById("number").value;
+        var pattern = /[9876][0-9]{9}/;
+        if ((pattern.test(number) == false || number == "") && number != 10) {
+          document.getElementById("numberdiv").innerHTML = "Not valid number";
+          document.getElementById("numberdiv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("numberdiv").innerHTML = "";
+          document.getElementById("numberdiv").style.color = "";
+          return true;
+        }
+      }
+
+      //CFLLocation
+      const cfl = document.querySelector("#address");
+      cfl.addEventListener("input", () => {
+        cfl.value = cfl.value ? cfl.value.trimStart() : "";
+      });
+      function validateaddress() {
+        var add = document.getElementById("address").value;
+        if (add == "") {
+          document.getElementById("addressdiv").innerHTML = "Enter address";
+          document.getElementById("addressdiv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("addressdiv").innerHTML = "";
+          document.getElementById("addressdiv").style.color = "";
+          return true;
+        }
+      }
+
+      $("#LDM_Name, #bank, #number, #address").on("input", function () {
+        validateForm();
+      });
+      function validateForm() {
+        var LDM_NameIsValid = validateLDM_Name();
+        var bankIsValid = validatebank();
+        var numberIsValid = validatenumber();
+        var addressIsValid = validateaddress();
+        if (LDM_NameIsValid && bankIsValid && numberIsValid && addressIsValid) {
+          $("#submit").prop("disabled", false);
+        } else {
+          $("#submit").prop("disabled", true);
+        }
+      }
+    </script>
+  </body>
+</html>

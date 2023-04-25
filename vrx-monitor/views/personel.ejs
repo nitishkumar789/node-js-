@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style type="text/css">
+      .style {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="block">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="d-block d-sm-flex justify-content-around align-items-center"
+            >
+              <a href="participant" class="btn btn-info w-100 m-1"
+                >Participants Information</a
+              >
+              <a href="block" class="btn btn-info w-100 m-1"
+                >Block master (Address)</a
+              >
+              <a href="activity" class="btn btn-info w-100 m-1"
+                >Activity Master</a
+              >
+              <a href="personel" class="btn btn-info w-100 m-1"
+                >Personnel Master Fi...</a
+              >
+              <a href="personelmaster" class="btn btn-info w-100 m-1"
+                >Peronnel master Ar...</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 m-auto">
+            <div class="card p-3 my-5 shadow">
+              <form action="personel" name="myForm" method="POST">
+                <div class="card mx-auto text-center border-0">
+                  <h3 class="text-center">CFL Personnel</h3>
+                  <div class="row">
+                    <!-- <div class="col-12 col-md-6"> -->
+                    <div class="col-12 col-md-6">
+                      <div class="form-group">
+                        <!-- <label for="inputCity">Date</label> -->
+                        <input
+                          type="Date"
+                          name="date"
+                          id="Date"
+                          class="form-control f"
+                          placeholder="Date"
+                          required
+                          maxlength="6"
+                        />
+                        <span
+                          id="Date"
+                          class="f-error test-danger font-weight-bold"
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="form-group">
+                        <select
+                          class="form-control mr-2 gender a required"
+                          name="block_id"
+                        >
+                          <option value="" name="block">Block</option>
+                          <% if (blocks) { %> <% for(var i = 0; i <
+                          blocks.length; i++) { %>
+                          <option value="<%= blocks[i].id %>" id="Block">
+                            <%= blocks[i].name %>
+                          </option>
+                          <% } %> <% } %>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="area_manager_name"
+                          id="AreaManagerName"
+                          class="form-control f"
+                          placeholder="Area Manager Name"
+                          onkeyup="validateAreaManagerName()"
+                        />
+                        <div
+                          id="AreaManagerNamediv"
+                          class="position-absolute style"
+                        ></div>
+                        <span
+                          id="AreaManagerName"
+                          class="f-error test-danger font-weight-bold"
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="area_manager_contact_no"
+                          id="AreaManagerContactNo"
+                          class="form-control f"
+                          placeholder="Area Manager Contact No"
+                          onkeyup="validateAreaManagerContactNo()"
+                          maxlength="10"
+                        />
+                        <div
+                          id="AreaManagerContactNodiv"
+                          class="position-absolute style"
+                        ></div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="form-group">
+                        <input
+                          type="email"
+                          name="area_manager_email"
+                          id="email"
+                          class="form-control f"
+                          placeholder="Email"
+                          onkeyup="validateemail()"
+                        />
+                        <div
+                          id="emaildiv"
+                          class="position-absolute style"
+                        ></div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="area_manager_address"
+                          id="Address"
+                          class="form-control f"
+                          placeholder="Address"
+                          onkeyup="validateaddress()"
+                        />
+                        <div
+                          id="Addressdiv"
+                          class="position-absolute style"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col p-0">
+                    <button
+                      type="submit"
+                      id="submit"
+                      name="submit"
+                      value="submit"
+                      class="submit btn btn-primary btn-block"
+                      disabled
+                    >
+                      submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="show_table">
+          <div class="conatiner">
+            <div class="row">
+              <div class="col-md-12 table-responsive">
+                <table id="transaction_tb" class="table tbinfo">
+                  <thead id="thd" class="bg-light">
+                    <tr>
+                      <th>Sr No.</th>
+                      <th>Date</th>
+                      <th>Block</th>
+                      <th>Areamanager Name</th>
+                      <th>Areamanager Contact No</th>
+                      <th>Areamanager Email</th>
+                      <th>Address</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transaction_div_dnld">
+                    <% if (list) { %> <% for(var i = 0; i < list.length; i++) {
+                    %>
+                    <tr>
+                      <td><%= i+1 %></td>
+                      <td><%= new Date(list[i].date).toISOString().replace("T"," ").substring(0, 16); %></td>
+                      <td><%= list[i].block_id %></td>
+                      <td><%= list[i].area_manager_name %></td>
+                      <td><%= list[i].area_manager_contact_no %></td>
+                      <td><%= list[i].area_manager_email %></td>
+                      <td><%= list[i].area_manager_address %></td>
+
+                      <td>
+                        <form
+                          onSubmit="if(!confirm('Are you sure?')){return false;}"
+                          action="#"
+                          method="post"
+                        >
+                          <button
+                            type="submit"
+                            class="btn btn-sm btn-primary trigger"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% } %> <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      //AreaManagerName
+      $(function () {
+        $("input[AreaManagerName='AreaManagerName']").on("input", function (e) {
+          console.log("==>", $(this).val().charAt(3));
+          if ($(this).val().indexOf("  ") != -1) {
+            $(this).val($(this).val().replace("  ", " "));
+            // $(this).val($(this).val().replace(".", ""));
+          } else {
+            $(this).val($(this).val().replace(".", ""));
+          }
+        });
+      });
+      $(document).ready(function () {
+        $("#AreaManagerName").on("keypress", function (e) {
+          var regex = new RegExp("^[a-zA-Z ]*$");
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+          if (regex.test(str)) {
+            return true;
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+      var text = document
+        .getElementById("AreaManagerName")
+        .value.replace(/ +/g, " ");
+      const fAreaManagerName = document.querySelector("#AreaManagerName");
+      fAreaManagerName.addEventListener("input", () => {
+        fAreaManagerName.value = fAreaManagerName.value
+          ? fAreaManagerName.value.trimStart()
+          : "";
+      });
+      function validateAreaManagerName() {
+        var nm = document.getElementById("AreaManagerName").value;
+        var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+        if (pattern.test(nm) == false || nm == " ") {
+          document.getElementById("AreaManagerName").value.replace(/\s+/g, " ");
+          document.getElementById("AreaManagerNamediv").innerHTML =
+            "Not valid AreaManagerName";
+          document.getElementById("AreaManagerNamediv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("AreaManagerNamediv").innerHTML = "";
+          document.getElementById("AreaManagerNamediv").style.color = "";
+          return true;
+        }
+      }
+
+      //contact
+      $(document).ready(function () {
+        $("#AreaManagerContactNo").on("keypress", function (e) {
+          var regex = new RegExp("^[0-9]+$");
+          var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+          if (regex.test(str)) {
+            return true;
+          }
+          e.preventDefault();
+          return false;
+        });
+      });
+      const AreaManagerContactNo1 = document.querySelector(
+        "#AreaManagerContactNo"
+      );
+      AreaManagerContactNo1.addEventListener("input", () => {
+        AreaManagerContactNo1.value = AreaManagerContactNo1.value
+          ? AreaManagerContactNo1.value.trimStart()
+          : "";
+      });
+      function validateAreaManagerContactNo() {
+        var AreaManagerContactNo = document.getElementById(
+          "AreaManagerContactNo"
+        ).value;
+        var pattern = /[9876][0-9]{9}/;
+        if (
+          (pattern.test(AreaManagerContactNo) == false ||
+            AreaManagerContactNo == "") &&
+          AreaManagerContactNo != 10
+        ) {
+          document.getElementById("AreaManagerContactNodiv").innerHTML =
+            "Not valid number";
+          document.getElementById("AreaManagerContactNodiv").style.color =
+            "red";
+          return false;
+        } else {
+          document.getElementById("AreaManagerContactNodiv").innerHTML = "";
+          document.getElementById("AreaManagerContactNodiv").style.color = "";
+          return true;
+        }
+      }
+
+      //email
+      const email = document.querySelector("#email");
+      email.addEventListener("input", () => {
+        email.value = email.value ? email.value.trimStart() : "";
+      });
+      function validateemail() {
+        var em = document.getElementById("email").value;
+        var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (pattern.test(em) == false || em == "") {
+          document.getElementById("emaildiv").innerHTML = "Not valid email";
+          document.getElementById("emaildiv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("emaildiv").innerHTML = "";
+          document.getElementById("emaildiv").style.color = "";
+          return true;
+        }
+      }
+
+      //address
+      const addr = document.querySelector("#Address");
+      addr.addEventListener("input", () => {
+        addr.value = addr.value ? addr.value.trimStart() : "";
+      });
+      function validateaddress() {
+        var add = document.getElementById("Address").value;
+        if (add == "") {
+          document.getElementById("Addressdiv").innerHTML = "Enter address";
+          document.getElementById("Addressdiv").style.color = "red";
+          return false;
+        } else {
+          document.getElementById("Addressdiv").innerHTML = "";
+          document.getElementById("Addressdiv").style.color = "";
+          return true;
+        }
+      }
+
+      $("#AreaManagerName, #AreaManagerContactNo, #email, #Address").on(
+        "input",
+        function () {
+          validateForm();
+        }
+      );
+      function validateForm() {
+        var AreaManagerNameIsValid = validateAreaManagerName();
+        var AreaManagerContactNoIsValid = validateAreaManagerContactNo();
+        var emailIsValid = validateemail();
+        var addressIsValid = validateaddress();
+
+        if (
+          AreaManagerNameIsValid &&
+          AreaManagerContactNoIsValid &&
+          emailIsValid &&
+          addressIsValid
+        ) {
+          $("#submit").prop("disabled", false);
+        } else {
+          $("#submit").prop("disabled", true);
+        }
+      }
+    </script>
+  </body>
+</html>

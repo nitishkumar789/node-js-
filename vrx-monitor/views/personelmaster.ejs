@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="block">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="d-block d-sm-flex justify-content-around align-items-center"
+            >
+              <a href="participant" class="btn btn-info w-100 m-1"
+                >Participants Information</a
+              >
+              <a href="block" class="btn btn-info w-100 m-1"
+                >Block master (Address)</a
+              >
+              <a href="activity" class="btn btn-info w-100 m-1"
+                >Activity Master</a
+              >
+              <a href="personel" class="btn btn-info w-100 m-1"
+                >Personnel Master Fi...</a
+              >
+              <a href="personelmaster" class="btn btn-info w-100 m-1"
+                >Peronnel master Ar...</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card p-3 shadow my-5">
+              <form action="personelmasters" name="myForm" method="post">
+                <div class="col-md-6 col-lg-12 col-12 m-auto">
+                  <div class="card border-0">
+                    <div class="text-center">
+                      <h3>CFL Personnel</h3>
+                    </div>
+                    <div class="col">
+                      <div class="row">
+                        <!-- <div class="col-12 col-md-6"> -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">Date</label>
+                            <input
+                              type="Date"
+                              name="date"
+                              id="Date"
+                              class="form-control f"
+                              placeholder="Date"
+                              required
+                            />
+                            <span
+                              id="Date"
+                              class="f-error test-danger font-weight-bold"
+                            ></span>
+                          </div>
+                        </div>
+                        <!-- ****************************************Block************************************** -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">Block</label>
+                            <select
+                              class="form-control mr-2 gender a required"
+                              name="block_id" required
+                            >
+                              <option value="" name="Block">Block</option>
+                              <% if (blocks) { %> <% for(var i = 0; i <
+                              blocks.length; i++) { %>
+                              <option value="<%= blocks[i].id %>" id="Block">
+                                <%= blocks[i].name %>
+                              </option>
+                              <% } %> <% } %>
+                            </select>
+                          </div>
+                        </div>
+                        <!-- ***********************************CFL_ID********************************************** -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">CFL ID</label>
+                            <input
+                              type="text"
+                              name="cfl_id"
+                              id="cflid"
+                              class="form-control"
+                              onkeyup="validatecflid()"
+                              placeholder="CFL ID"
+                              required
+                            />
+                            <div id="cfliddiv" class="position-absolute"></div>
+                          </div>
+                        </div>
+                        <!-- **********************************CFL Name************************************* -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">CFL Name</label>
+                            <input
+                              type="text"
+                              name="cfl_name"
+                              id="CFLName"
+                              class="form-control"
+                              required
+                              placeholder="CFL Name"
+                              autocomplete="off"
+                              onkeyup="validateCFLName()"
+                            />
+                            <div id="CFLNamediv" class="position-absolute"></div>
+                          </div>
+                        </div>
+                        <!-- ******************************CFL Location************************************ -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">CFL Location</label>
+                            <input
+                              type="text"
+                              name="cfl_location"
+                              id="CFLLocation"
+                              class="form-control"
+                              required
+                              placeholder="CFL Location"
+                              onkeyup="validateCFLLocation()"
+                              autocomplete="off"
+                            />
+                           <div id="CFLLocationdiv" class="position-absolute"></div>
+                          </div>
+                        </div>
+                        <!-- ****************************Trainer Name*************************************** -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">Trainer Name</label>
+                            <input
+                              type="text"
+                              name="trainer_name"
+                              id="TrainerName"
+                              class="form-control"
+                              onkeyup="validateTrainerName()"
+                              required
+                              placeholder="Trainer Name"
+                              autocomplete="off"
+                            />
+                            <div id="TrainerNamediv" class="position-absolute"></div>
+                            <span></span>
+                          </div>
+                        </div>
+                        <!-- ****************************Trainer Contact NO********************************* -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">Trainer Contact NO</label>
+                            <input
+                              type="text"
+                              name="trainer_contact_no"
+                              id="TrainerContactNO"
+                              class="form-control"
+                              required
+                              maxlength="10"
+                              placeholder="Trainer Contact No"
+                              onkeyup="validateTrainerContactNO()"
+                            />
+                            <div id="TrainerContactNOdiv" class="position-absolute"></div>
+                            <span
+                              id="TrainerContactNO"
+                              class="f-error test-danger font-weight-bold"
+                            ></span>
+                          </div>
+                          <div
+                            id="TrainerContact NOdiv"
+                            class="position-absolute"
+                          ></div>
+                        </div>
+                        <!-- ***************************Trainer's Gender************************************ -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">Trainer's Gender</label>
+                            <select
+                              class="form-control mr-2"
+                              name="trainer_gender"
+                              required
+                            >
+                              <option value="" name="Block">
+                                Trainer's Gender
+                              </option>
+                              <option value="0" id="Trainer" name="Block">
+                                Male
+                              </option>
+                              <option value="1" id="Trainer" name="Block">
+                                Female
+                              </option>
+                              <option value="1">Others</option>
+                            </select>
+                          </div>
+                        </div>
+                        <!-- <!-*****************AreaManagerName************************************* -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="inputCity">Area Manager Name</label>
+                            <input
+                              type="text"
+                              name="area_manager_name"
+                              id="AreaManagerName"
+                              class="form-control "
+                              onkeyup="validateAreaManagerName()"
+                              required
+                              placeholder="Area Manager Name"
+                              onkeypress="return  (event.charCode > 96 && event.charCode < 123) || (event.charCode > 64 && event.charCode < 91) || (event.charCode == 32)"
+                              autocomplete="off"
+                            />
+                            <div id="AreaManagerNamediv" class="position-absolute"></div>
+                            <span
+                              id="AreaManagerName"
+                              class="f-error test-danger font-weight-bold"
+                            ></span>
+                          </div>
+                        </div>
+                        <!-- **********************AreaManagerContactNo************************************* -->
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label class="text-left" for="inputCity"
+                              >AreaManagerContactNo</label
+                            >
+                            <input
+                              type="text"
+                              name="area_manager_contact_no"
+                              id="AreaManagerContactNo"
+                              class="form-control "
+                              placeholder="AreaManagerContactNo"
+                              pattern="^[6-9]\d{9}$"
+                              onkeyup="validateAreaManagerContactNo()"
+                              autocomplete="off"
+                              required
+                              maxlength="10"
+                              pattern="^[6-9]\d{9}$"
+                              id="AreaManagerContactNo"
+                              name="area_manager_contact_no"
+                            />
+                            <div
+                              id="AreaManagerContactNodiv"
+                              class="position-absolute"
+                            ></div>
+                          </div>
+                        </div>
+                        <!-- ***********************************submit******************************************** -->
+                        <div class="col-md-3 d-flex align-items-end form-group">
+                          <button
+                            type="submit"
+                            id="submit"
+                            name="submit"
+                            value="submit"
+                            class="submit btn btn-success btn-block"
+                            disabled
+                          >
+                            submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="show_table">
+          <div class="conatiner">
+            <div class="row">
+              <div class="col-md-12 table-responsive">
+                <table id="transaction_tb" class="table tbinfo">
+                  <thead id="thd" class="bg-light">
+                    <tr>
+                      <th>Sr No</th>
+                      <th>date</th>
+                      <th>Block Id</th>
+                      <th>cfl_id</th>
+                      <th>Cfl Name</th>
+                      <th>Cfl Location</th>
+                      <th>Trainer Name</th>
+                      <th>Trainer Contact No</th>
+                      <th>Trainer Gender</th>
+                      <th>Area Manager Name</th>
+                      <th>Area Manager Contact No</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transaction_div_dnld">
+                    <% if (list) { %> <% for(var i = 0; i < list.length; i++) {
+                    %>
+                    <tr>
+                      <td><%= i+1 %></td>
+                      <td>
+                        <%= new Date(list[i].date).toISOString().replace("T"," ").substring(0, 16); %>
+                      </td>
+                      <td><%= list[i].block_id %></td>
+                      <td><%= list[i].cfl_id %></td>
+                      <td><%= list[i].cfl_name %></td>
+                      <td><%= list[i].cfl_location %></td>
+                      <td><%= list[i].trainer_name %></td>
+                      <td><%= list[i].trainer_contact_no %></td>
+                      <td><%= list[i].trainer_gender %></td>
+                      <td><%= list[i].area_manager_name %></td>
+                      <td><%= list[i].area_manager_contact_no %></td>
+                      <td>
+                        <form
+                          onSubmit="if(!confirm('Are you sure?')){return false;}"
+                          action="#"
+                          method="post"
+                        >
+                          <button
+                            type="submit"
+                            class="btn btn-sm btn-primary trigger"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% } %> <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+      //cflid
+      const addr = document.querySelector('#cflid');
+      addr.addEventListener('input', () => {
+      addr.value = addr.value ? addr.value.trimStart() : ''; 
+    })
+    function validatecflid(){
+    var add = document.getElementById("cflid").value;
+    if(add == ""){
+        document.getElementById('cfliddiv').innerHTML = "Enter CFLid";
+        document.getElementById('cfliddiv').style.color = "red";
+        return false;
+    }
+    else{
+        document.getElementById('cfliddiv').innerHTML = "";
+        document.getElementById('cfliddiv').style.color = "";
+        return true;
+    }
+}
+
+//CFLName
+$(function() {
+  $("input[CFLName='CFLName']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace(".", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#CFLName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("CFLName").value.replace (/ +/g, " ");
+ const fCFLName = document.querySelector('#CFLName');
+    fCFLName.addEventListener('input', () => {
+      fCFLName.value = fCFLName.value ? fCFLName.value.trimStart() : ''; 
+    })
+function validateCFLName(){
+var nm = document.getElementById('CFLName').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById("CFLName").value.replace(/\s+/g, " ");
+document.getElementById('CFLNamediv').innerHTML = "Not valid CFLName";
+document.getElementById('CFLNamediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('CFLNamediv').innerHTML = "";
+document.getElementById('CFLNamediv').style.color = "";
+return true;
+}
+}
+
+//CFLLocation
+      const cfl = document.querySelector('#CFLLocation');
+      cfl.addEventListener('input', () => {
+      cfl.value = cfl.value ? cfl.value.trimStart() : ''; 
+    })
+    function validateCFLLocation(){
+    var add = document.getElementById("CFLLocation").value;
+    if(add == ""){
+        document.getElementById('CFLLocationdiv').innerHTML = "Enter CFLLocation";
+        document.getElementById('CFLLocationdiv').style.color = "red";
+        return false;
+    }
+    else{
+        document.getElementById('CFLLocationdiv').innerHTML = "";
+        document.getElementById('CFLLocationdiv').style.color = "";
+        return true;
+    }
+}
+
+//TrainerName
+$(function() {
+  $("input[TrainerName='TrainerName']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace(".", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#TrainerName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("TrainerName").value.replace (/ +/g, " ");
+ const fTrainerName = document.querySelector('#TrainerName');
+    fTrainerName.addEventListener('input', () => {
+      fTrainerName.value = fTrainerName.value ? fTrainerName.value.trimStart() : ''; 
+    })
+function validateTrainerName(){
+var nm = document.getElementById('TrainerName').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById("TrainerName").value.replace(/\s+/g, " ");
+document.getElementById('TrainerNamediv').innerHTML = "Not valid TrainerName";
+document.getElementById('TrainerNamediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('TrainerNamediv').innerHTML = "";
+document.getElementById('TrainerNamediv').style.color = "";
+return true;
+}
+}
+
+//contact
+$(document).ready(function() {
+    $('#TrainerContactNO').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const TrainerContactNO1 = document.querySelector('#TrainerContactNO');
+    TrainerContactNO1.addEventListener('input', () => {
+      TrainerContactNO1.value = TrainerContactNO1.value ? TrainerContactNO1.value.trimStart() : ''; 
+    })
+function validateTrainerContactNO(){
+var TrainerContactNO = document.getElementById('TrainerContactNO').value;
+var pattern = /[9876][0-9]{9}/;     
+if((pattern.test(TrainerContactNO) == false || TrainerContactNO == "") && TrainerContactNO != 10){
+document.getElementById('TrainerContactNOdiv').innerHTML = "Not valid number";
+document.getElementById('TrainerContactNOdiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('TrainerContactNOdiv').innerHTML = "";
+document.getElementById('TrainerContactNOdiv').style.color = "";
+return true;
+}
+}
+
+//AreaManagerName
+$(function() {
+  $("input[AreaManagerName='AreaManagerName']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace(".", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#AreaManagerName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("AreaManagerName").value.replace (/ +/g, " ");
+ const fAreaManagerName = document.querySelector('#AreaManagerName');
+    fAreaManagerName.addEventListener('input', () => {
+      fAreaManagerName.value = fAreaManagerName.value ? fAreaManagerName.value.trimStart() : ''; 
+    })
+function validateAreaManagerName(){
+var nm = document.getElementById('AreaManagerName').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById("AreaManagerName").value.replace(/\s+/g, " ");
+document.getElementById('AreaManagerNamediv').innerHTML = "Not valid AreaManagerName";
+document.getElementById('AreaManagerNamediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('AreaManagerNamediv').innerHTML = "";
+document.getElementById('AreaManagerNamediv').style.color = "";
+return true;
+}
+}
+
+//contact
+$(document).ready(function() {
+    $('#AreaManagerContactNo').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const AreaManagerContactNo1 = document.querySelector('#AreaManagerContactNo');
+    AreaManagerContactNo1.addEventListener('input', () => {
+      AreaManagerContactNo1.value = AreaManagerContactNo1.value ? AreaManagerContactNo1.value.trimStart() : ''; 
+    })
+function validateAreaManagerContactNo(){
+var AreaManagerContactNo = document.getElementById('AreaManagerContactNo').value;
+var pattern = /[9876][0-9]{9}/;     
+if((pattern.test(AreaManagerContactNo) == false || AreaManagerContactNo == "") && AreaManagerContactNo != 10){
+document.getElementById('AreaManagerContactNodiv').innerHTML = "Not valid number";
+document.getElementById('AreaManagerContactNodiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('AreaManagerContactNodiv').innerHTML = "";
+document.getElementById('AreaManagerContactNodiv').style.color = "";
+return true;
+}
+}
+
+$('#cflid, #CFLName, #CFLLocation, #TrainerName, #TrainerContactNO, #AreaManagerName, #AreaManagerContactNo').on('input', function(){
+  validateForm();
+});
+function validateForm(){
+  var cflidIsValid = validatecflid();
+  var CFLNameIsValid = validateCFLName();
+  var CFLLocationIsValid = validateCFLLocation();
+  var TrainerNameIsValid = validateTrainerName();
+  var TrainerContactNOIsValid = validateTrainerContactNO();
+  var AreaManagerNameIsValid = validateAreaManagerName();
+  var AreaManagerContactNoIsValid = validateAreaManagerContactNo();
+
+  if(cflidIsValid && CFLNameIsValid && CFLLocationIsValid && TrainerNameIsValid && TrainerContactNOIsValid && AreaManagerNameIsValid && AreaManagerContactNoIsValid){
+  $('#submit').prop('disabled', false);
+} else {
+  $('#submit').prop('disabled', true);
+}
+}
+
+
+
+    </script>
+  </body>
+</html>

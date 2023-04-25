@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style type="text/css">
+      .style{
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="block">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-block d-sm-flex justify-content-around align-items-center">
+              <a href="participant" class="btn btn-info w-100 m-1">Participants Information</a>
+              <a href="block" class="btn btn-info w-100 m-1">Block master (Address)</a>
+              <a href="activity" class="btn btn-info w-100 m-1">Activity Master</a>
+              <a href="personel" class="btn btn-info w-100 m-1">Personnel Master Fi...</a>
+              <a href="personelmaster" class="btn btn-info w-100 m-1">Peronnel master Ar...</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card p-3 my-3 shadow" >
+              <div class="text-center">
+                <h3>Activity</h3>
+              </div>             
+              <form method="POST" action="activity" name="myForm">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="inputEmail4">State</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="state"
+                      name="state"
+                      placeholder="State"
+                      onkeyup="validatestate()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="statediv" class="position-absolute style"></div>
+                    <span id="div1" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputPassword4">District</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="district"
+                      name="district"
+                      placeholder="District"
+                      onkeyup="validatedistrict()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="districtdiv" class="position-absolute style"></div>
+                    <span id="div2" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputAddress">Block</label>
+                    <!-- <input type="text" class="form-control" id="block" name="block_id" placeholder="Block"> -->
+                    <select
+                      class="form-control mr-2 gender a required"
+                      name="block_id"
+                      required
+                    >
+                      <option value=""> --- Select Block ---</option>
+                      <% if (blocks) { %> <% for(var i = 0; i <
+                      blocks.length; i++) { %>
+                      <option value="<%= blocks[i].id %>" id="Block">
+                        <%= blocks[i].name %>
+                      </option>
+                      <% } %> <% } %>
+                    </select>
+                    <span id="div3" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <label for="inputAddress">Campaign</label>
+                    <!-- <input type="text" class="form-control" id="block" name="block_id" placeholder="Block"> -->
+                    <select
+                      class="form-control mr-2 gender a required"
+                      name="block_id"
+                      required
+                    >
+                      <option value="">--- Select Campaign ---</option>
+                      <% if (campaign) { %> <% for(var i = 0; i <
+                        campaign.length; i++) { %>
+                      <option value="<%= campaign[i].id %>" id="Block">
+                        <%= campaign[i].name %>
+                      </option>
+                      <% } %> <% } %>
+                    </select>
+                    <span id="div3" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+
+
+                  <div class="form-group col-md-4">
+                    <label for="inputAddress2">Gram Panchayat</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="gramPanchayat"
+                      name="gram_panchayat"
+                      placeholder="Gram Panchayat"
+                      onkeyup="validategramPanchayat()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="gramPanchayatdiv" class="position-absolute style"></div>
+                    <span id="div4" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Village</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="village"
+                      name="village"
+                      placeholder="Village"
+                      onkeyup="validatevillage()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="villagediv" class="position-absolute style"></div>
+                    <span id="div5" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Campaign Venue</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="campaignValue"
+                      name="campaign_venue"
+                      placeholder="Campaign Venues"
+                      onkeyup="validatecampaignValue()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="campaignValuediv" class="position-absolute style"></div>
+                    <span id="div6" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Area Manager</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="areaManager" 
+                      name="area_manager" 
+                      placeholder="Area Manager" 
+                      onkeyup="validateareaManager()" 
+                      autocomplete = "off"
+                      required
+                      >
+                    
+                    <div id="areaManagerdiv" class="position-absolute style"></div>
+                    <span id="div7" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Campaign Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="campaignDate"
+                      name="campaign_date"
+                      placeholder="Campaign Date"
+                      required
+                    />
+                    <span id="div8" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">NGO Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="ngoName"
+                      name="ngo_name"
+                      placeholder="NGO Name"
+                      maxlength="10"
+                      onkeyup="validatengoName()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="ngoNamediv" class="position-absolute style"></div>
+                    <span id="div9" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Name of internal touch point</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="internalName"
+                      name="internal_Name"
+                      placeholder="Internal Name"
+                      maxlength="10"
+                      onkeyup="validateinternalName()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="internalNamediv" class="position-absolute style"></div>
+                    <span id="div9" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity"
+                      >Contact Details of Inter Touch</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contactInternal"
+                      name="contact_internal_touchpoint"
+                      placeholder="Contact"
+                      maxlength="10"
+                      onkeyup="validatecontactInternal()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="contactInternaldiv" class="position-absolute style"></div>
+                    <span
+                      id="div10"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Location Details</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="locationDetails"
+                      name="address"
+                      placeholder="Location"
+                      onkeyup="validatelocationDetails()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="locationDetailsdiv" class="position-absolute style"></div>
+                    <span
+                      id="div11"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputEmail4">Name of external touch point</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="externalName"
+                      name="external_name"
+                      placeholder="External Name"
+                      onkeyup="validateexternalName()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="externalNamediv" class="position-absolute style"></div>
+                    <span id="div1" class="error position-absolute text-danger">
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity"
+                      >Contact Details of External Touch</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contactDetails"
+                      name="contact_external_touchpoint"
+                      placeholder="Contact"
+                      maxlength="10"
+                      onkeyup="validatecontactDetails()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="contactDetailsdiv" class="position-absolute style"></div>
+                    <span
+                      id="div12"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Start Time</label>
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="startTime"
+                      name="start_time"
+                      placeholder="Start Time"
+                      required
+                    />
+                    <span
+                      id="div13"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">End Time</label>
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="endTime"
+                      name="end_time"
+                      placeholder="End Time"
+                      required
+                    />
+                    <span
+                      id="div14"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">No. of Participants</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="numberParticipants"
+                      name="participants"
+                      placeholder="Participants"
+                      onkeyup="validatenumberParticipants()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="numberParticipantsdiv" class="position-absolute style"></div>
+                    <span
+                      id="div15"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Program Topic</label>
+                    <select class="form-control" required>
+                          <option value="1">Basic Numeracy Skills</option>
+                          <option value="2">Basic finanacial literacy concepts</option>
+                          <option value="3">Day to day money management</option>
+                          <option value="4">Credit/ Over-indebtedness</option>
+                          <option value="5">Saving/Planning</option>
+                          <option value="6">Insurance</option>
+                          <option value="7">Digital financial services including remittances</option>
+                          <option value="8">Consumers rights & responsibilities</option>
+                          <option value="9">Entrepreneurship/Business finances</option>
+                          <option value="10">Grievance Redress Mechanism</option>
+                          <option value="11">Retirement</option>
+                          <option value="12">Others (box to enter other details)</option>
+                    </select>
+                    <span
+                      id="div16"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Teaching/Training Method</label>
+                    <select class="form-control">
+                          <option value="1">AV</option>
+                          <option value="2">Lecture/Powerpoint presentation</option>
+                          <option value="3">Games</option>
+                          <option value="4">Role play</option>
+                          <option value="5">Case studies</option>
+                          <option value="6">Apps</option>
+                          <option value="7">Others (box to enter other details)</option>
+                        </select>
+                    <span
+                      id="div17"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Picture/Video Upload</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="files"
+                      id="picture"
+                      placeholder="Upload"
+                      onkeyup="validatepicture()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="picturediv" class="position-absolute style"></div>
+                    <span
+                      id="div18"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">No. of Photographs</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="noOfPhotographs"
+                      name="photographs_count"
+                      placeholder="No. of Photographs"
+                      onkeyup="validatenoOfPhotographs()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="noOfPhotographsdiv" class="position-absolute style"></div>
+                    <span
+                      id="div19"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Testimonials</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="testimonials_files"
+                      id="testimonials"
+                      placeholder="Testimonials"
+                      onkeyup="validatetestimonials()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="testimonialsdiv" class="position-absolute style"></div>
+                    <span
+                      id="div20"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">No. of Testimonials</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="noOfTestimonials"
+                      name="testimonials_count"
+                      placeholder="No. of Testimonials"
+                      onkeyup="validatenoOfTestimonials()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="noOfTestimonialsdiv" class="position-absolute style"></div>
+                    <span
+                      id="div21"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputAddress">CFL</label>
+                  <select
+                      class="form-control mr-2 gender a required"
+                      name="area_manager"
+                      required
+                    >
+                      <option value="" name="Block">-----CFL-----</option>
+                      <% if (cfl) { %> <% for(var i = 0; i <
+                        cfl.length; i++) { %>
+                      <option value="<%= cfl[i].id %>" id="Block">
+                        <%= cfl[i].name %>
+                      </option>
+                      <% } %> <% } %>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">CFL Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cflName"
+                      name="cfl_name"
+                      placeholder="CFL Name"
+                      onkeyup="validatecflName()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="cflNamediv" class="position-absolute style"></div>
+                    <span
+                      id="div21"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Program Duration</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="programDuration"
+                      name="testimonials_count"
+                      placeholder="Program Duration"
+                      onkeyup="validateprogramDuration()"
+                      autocomplete = "off"
+                      required
+                    />
+                    <div id="programDurationdiv" class="position-absolute style"></div>
+                    <span
+                      id="div21"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputAddress">LDM</label>
+                  <select
+                      class="form-control mr-2 gender a required"
+                      name="area_manager"
+                      required
+                    >
+                      <option value="" name="Block">-----LDM-----</option>
+                      <% if (ldm) { %> <% for(var i = 0; i <
+                        ldm.length; i++) { %>
+                      <option value="<%= ldm[i].id %>" id="Block">
+                        <%= ldm[i].ldm_name %>
+                      </option>
+                      <% } %> <% } %>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="d-block" for="inputCity">Kit/material on financial literacy</label>
+                          <div class="form-check form-check-inline mr-1">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="exampleRadios1"
+                            value="0"
+                            checked
+                          />
+                          <label class="form-check-label" for="exampleRadios1">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline mr-1">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="exampleRadios11"
+                            value="1"
+                          />
+                          <label class="form-check-label" for="exampleRadios11">
+                            No
+                          </label>
+                        </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputCity">Sponsor Bank</label>
+                    <select class="form-control">
+                          <option value="1">Yes Bank</option>
+                          <option value="2">Axis Bank</option>
+                          <option value="3">ICICI Bank</option>
+                          <option value="4">Federal Bank</option>
+                          <option value="5">Canara Bank</option>
+                          <option value="6">SBI Bank</option>
+                          <option value="7">Bank Of Baroda</option>
+                        </select>
+                    <span
+                      id="div17"
+                      class="error position-absolute text-danger"
+                    >
+                    </span>
+                  </div>
+                  <div class="col-md-4 ml-auto">
+                     <button
+                        type="submit"
+                        id="submit"
+                        name="submit"
+                        value="submit"
+                        class="submit btn btn-success w-100"
+                        disabled
+                      >
+                        submit
+                      </button>
+                  </div>
+                </div>
+               
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="show_table mt-2">
+          <div class="conatiner">
+            <div class="row">
+              <div class="col-md-12 table-responsive">
+                <table id="transaction_tb" class="table tbinfo">
+                  <thead id="thd" class="bg-light">
+                    <tr>
+                      <th>Sr No</th>
+                      <th>State</th>
+                      <th>District</th>
+                      <th>Blockid</th>
+                      <th>Grampanchayat</th>
+                      <th>Village</th>
+                      <th>Campaignvenue</th>
+                      <th>Areamanager</th>
+                      <th>Campaigndate</th>
+                      <th>Ngoname</th>
+                      <th>Contactinternaltouchpoint</th>
+                      <th>Address</th>
+                      <th>Telephone</th>
+                      <th>Contactexternaltouchpoint</th>
+                      <th>Starttime</th>
+                      <th>Endtime</th>
+                      <th>Participants</th>
+                      <th>Programtopic</th>
+                      <th>Trainingmethod</th>
+                      <th>Files</th>
+                      <th>Photographscount</th>
+                      <th>Testimonialsfiles</th>
+                      <th>Photographscount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transaction_div_dnld">
+                    <% if (list) { %> <% for(var i = 0; i < list.length;
+                    i++) { %>
+                    <tr>
+                      <td><%= i+1 %></td>
+                      <td><%= list[i].state %></td>
+                      <td><%= list[i].district %></td>
+                      <td><%= list[i].block_id %></td>
+                      
+                      <td><%= list[i].gram_panchayat %></td>
+                      <td><%= list[i].village %></td>
+                      <td><%= list[i].campaign_venue %></td>
+                
+                      <td><%= list[i].area_manager %></td>
+                      <td><%= new Date(list[i].campaign_date).toISOString().replace("T"," ").substring(0, 16); %></td>
+                      <td><%= list[i].ngo_name %></td>
+                      <td><%= list[i].contact_internal_touchpoint %></td>
+
+                      <td><%= list[i].address %></td>
+                      <td><%= list[i].telephone  %></td>
+                      <td><%= list[i].contact_external_touchpoint %></td>
+                      <td><%= new Date(list[i].start_time).toISOString().replace("T"," ").substring(0, 16); %></td>
+
+                      <td><%= new Date(list[i].end_time).toISOString().replace("T"," ").substring(0, 16); %></td>
+                      <td><%= list[i].participants  %></td>
+                      <td><%= list[i].program_topic %></td>
+                      <td><%= list[i].training_method %></td>
+
+                      <td><%= list[i].files %></td>
+                      <td><%= list[i].photographs_count  %></td>
+                      <td><%= list[i].testimonials_files %></td>
+                      <td><%= list[i].testimonials_count %></td>
+
+                      <td>
+                        <form
+                          onSubmit="if(!confirm('Are you sure?')){return false;}"
+                          action="#"
+                          method="post"
+                        >
+                          <button type="submit" class="btn btn-sm btn-dark trigger">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% } %> <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+      //state
+$(function() {
+  $("input[state='state']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace(".", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#state').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("state").value.replace (/ +/g, " ");
+ const fstate = document.querySelector('#state');
+    fstate.addEventListener('input', () => {
+      fstate.value = fstate.value ? fstate.value.trimStart() : ''; 
+    })
+function validatestate(){
+var nm = document.getElementById('state').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById("state").value.replace(/\s+/g, " ");
+document.getElementById('statediv').innerHTML = "Not valid state";
+document.getElementById('statediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('statediv').innerHTML = "";
+document.getElementById('statediv').style.color = "";
+return true;
+}
+}
+
+//district
+$(function() {
+  $("input[district='district']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#district').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("district").value.replace (/ +/g, " ");
+ const fdistrict = document.querySelector('#district');
+    fdistrict.addEventListener('input', () => {
+      fdistrict.value = fdistrict.value ? fdistrict.value.trimStart() : ''; 
+    })
+function validatedistrict(){
+var nm = document.getElementById('district').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('districtdiv').innerHTML = "Not valid district";
+document.getElementById('districtdiv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('districtdiv').innerHTML = "";
+document.getElementById('districtdiv').style.color = "";
+return true;
+}
+}
+
+//grampanchayat
+$(function() {
+  $("input[gramPanchayat='gramPanchayat']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#gramPanchayat').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("gramPanchayat").value.replace (/ +/g, " ");
+ const fgramPanchayat = document.querySelector('#gramPanchayat');
+    fgramPanchayat.addEventListener('input', () => {
+      fgramPanchayat.value = fgramPanchayat.value ? fgramPanchayat.value.trimStart() : ''; 
+    })
+function validategramPanchayat(){
+var nm = document.getElementById('gramPanchayat').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('gramPanchayatdiv').innerHTML = "Not valid gramPanchayat";
+document.getElementById('gramPanchayatdiv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('gramPanchayatdiv').innerHTML = "";
+document.getElementById('gramPanchayatdiv').style.color = "";
+return true;
+}
+}
+
+//village
+$(function() {
+  $("input[village='village']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#village').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("village").value.replace (/ +/g, " ");
+ const fvillage = document.querySelector('#village');
+    fvillage.addEventListener('input', () => {
+      fvillage.value = fvillage.value ? fvillage.value.trimStart() : ''; 
+    })
+function validatevillage(){
+var nm = document.getElementById('village').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('villagediv').innerHTML = "Not valid village";
+document.getElementById('villagediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('villagediv').innerHTML = "";
+document.getElementById('villagediv').style.color = "";
+return true;
+}
+}
+ 
+//campaignValue
+$(function() {
+  $("input[campaignValue='campaignValue']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#campaignValue').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("campaignValue").value.replace (/ +/g, " ");
+ const fcampaignValue = document.querySelector('#campaignValue');
+    fcampaignValue.addEventListener('input', () => {
+      fcampaignValue.value = fcampaignValue.value ? fcampaignValue.value.trimStart() : ''; 
+    })
+function validatecampaignValue(){
+var nm = document.getElementById('campaignValue').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('campaignValuediv').innerHTML = "Not valid campaignValue";
+document.getElementById('campaignValuediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('campaignValuediv').innerHTML = "";
+document.getElementById('campaignValuediv').style.color = "";
+return true;
+}
+}
+
+//areaManager
+$(function() {
+  $("input[areaManager='areaManager']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#areaManager').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("areaManager").value.replace (/ +/g, " ");
+ const fareaManager = document.querySelector('#areaManager');
+    fareaManager.addEventListener('input', () => {
+      fareaManager.value = fareaManager.value ? fareaManager.value.trimStart() : ''; 
+    })
+function validateareaManager(){
+var nm = document.getElementById('areaManager').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('areaManagerdiv').innerHTML = "Not valid areaManager";
+document.getElementById('areaManagerdiv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('areaManagerdiv').innerHTML = "";
+document.getElementById('areaManagerdiv').style.color = "";
+return true
+}
+}
+
+//ngoName
+$(function() {
+  $("input[ngoName='ngoName']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#ngoName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("ngoName").value.replace (/ +/g, " ");
+ const fngoName = document.querySelector('#ngoName');
+    fngoName.addEventListener('input', () => {
+      fngoName.value = fngoName.value ? fngoName.value.trimStart() : ''; 
+    })
+function validatengoName(){
+var nm = document.getElementById('ngoName').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('ngoNamediv').innerHTML = "Not valid ngoName";
+document.getElementById('ngoNamediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('ngoNamediv').innerHTML = "";
+document.getElementById('ngoNamediv').style.color = "";
+return true;
+}
+}
+
+//internalName
+$(function() {
+  $("input[internalName='internalName']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#internalName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("internalName").value.replace (/ +/g, " ");
+ const finternalName = document.querySelector('#internalName');
+    finternalName.addEventListener('input', () => {
+      finternalName.value = finternalName.value ? finternalName.value.trimStart() : ''; 
+    })
+function validateinternalName(){
+var nm = document.getElementById('internalName').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('internalNamediv').innerHTML = "Not valid internalName";
+document.getElementById('internalNamediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('internalNamediv').innerHTML = "";
+document.getElementById('internalNamediv').style.color = "";
+return true;
+}
+}
+
+//contact
+$(document).ready(function() {
+    $('#contactInternal').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const contactInternal1 = document.querySelector('#contactInternal');
+    contactInternal1.addEventListener('input', () => {
+      contactInternal1.value = contactInternal1.value ? contactInternal1.value.trimStart() : ''; 
+    })
+function validatecontactInternal(){
+var contactInternal = document.getElementById('contactInternal').value;
+var pattern = /[9876][0-9]{9}/;     
+if((pattern.test(contactInternal) == false || contactInternal == "") && contactInternal != 10){
+document.getElementById('contactInternaldiv').innerHTML = "Not valid number";
+document.getElementById('contactInternaldiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('contactInternaldiv').innerHTML = "";
+document.getElementById('contactInternaldiv').style.color = "";
+return true;
+}
+}
+
+//locationDetails
+$(function() {
+  $("input[locationDetails='locationDetails']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#locationDetails').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("locationDetails").value.replace (/ +/g, " ");
+ const flocationDetails = document.querySelector('#locationDetails');
+    flocationDetails.addEventListener('input', () => {
+      flocationDetails.value = flocationDetails.value ? flocationDetails.value.trimStart() : ''; 
+    })
+function validatelocationDetails(){
+var nm = document.getElementById('locationDetails').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('locationDetailsdiv').innerHTML = "Not valid locationDetails";
+document.getElementById('locationDetailsdiv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('locationDetailsdiv').innerHTML = "";
+document.getElementById('locationDetailsdiv').style.color = "";
+return true;
+}
+}
+
+//externalName
+$(function() {
+  $("input[externalName='externalName']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#externalName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("externalName").value.replace (/ +/g, " ");
+ const fexternalName = document.querySelector('#externalName');
+    fexternalName.addEventListener('input', () => {
+      fexternalName.value = fexternalName.value ? fexternalName.value.trimStart() : ''; 
+    })
+function validateexternalName(){
+var nm = document.getElementById('externalName').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('externalNamediv').innerHTML = "Not valid externalName";
+document.getElementById('externalNamediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('externalNamediv').innerHTML = "";
+document.getElementById('externalNamediv').style.color = "";
+return true;
+}
+}
+
+//contact
+$(document).ready(function() {
+    $('#contactDetails').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const contactDetails1 = document.querySelector('#contactDetails');
+    contactDetails1.addEventListener('input', () => {
+      contactDetails1.value = contactDetails1.value ? contactDetails1.value.trimStart() : ''; 
+    })
+function validatecontactDetails(){
+var contactDetails = document.getElementById('contactDetails').value;
+var pattern = /[9876][0-9]{9}/;     
+if((pattern.test(contactDetails) == false || contactDetails == "") && contactDetails != 10){
+document.getElementById('contactDetailsdiv').innerHTML = "Not valid number";
+document.getElementById('contactDetailsdiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('contactDetailsdiv').innerHTML = "";
+document.getElementById('contactDetailsdiv').style.color = "";
+return true;
+}
+}
+
+//numberParticipants
+$(document).ready(function() {
+    $('#numberParticipants').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const numberParticipants1 = document.querySelector('#numberParticipants');
+    numberParticipants1.addEventListener('input', () => {
+      numberParticipants1.value = numberParticipants1.value ? numberParticipants1.value.trimStart() : ''; 
+    })
+function validatenumberParticipants(){
+var numberParticipants = document.getElementById('numberParticipants').value;
+var pattern = /[0-9]/;     
+if((pattern.test(numberParticipants) == false || numberParticipants == "")){
+document.getElementById('numberParticipantsdiv').innerHTML = "Not valid number";
+document.getElementById('numberParticipantsdiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('numberParticipantsdiv').innerHTML = "";
+document.getElementById('numberParticipantsdiv').style.color = "";
+return true;
+}
+}
+
+//picture
+$(function() {
+  $("input[picture='picture']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#picture').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("picture").value.replace (/ +/g, " ");
+ const fpicture = document.querySelector('#picture');
+    fpicture.addEventListener('input', () => {
+      fpicture.value = fpicture.value ? fpicture.value.trimStart() : ''; 
+    })
+function validatepicture(){
+var nm = document.getElementById('picture').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('picturediv').innerHTML = "Not valid picture";
+document.getElementById('picturediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('picturediv').innerHTML = "";
+document.getElementById('picturediv').style.color = "";
+return true;
+}
+}
+
+//noOfPhotographs
+$(document).ready(function() {
+    $('#noOfPhotographs').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const noOfPhotographs1 = document.querySelector('#noOfPhotographs');
+    noOfPhotographs1.addEventListener('input', () => {
+      noOfPhotographs1.value = noOfPhotographs1.value ? noOfPhotographs1.value.trimStart() : ''; 
+    })
+function validatenoOfPhotographs(){
+var noOfPhotographs = document.getElementById('noOfPhotographs').value;
+var pattern = /[0-9]/;     
+if((pattern.test(noOfPhotographs) == false || noOfPhotographs == "")){
+document.getElementById('noOfPhotographsdiv').innerHTML = "Not valid number";
+document.getElementById('noOfPhotographsdiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('noOfPhotographsdiv').innerHTML = "";
+document.getElementById('noOfPhotographsdiv').style.color = "";
+return true;
+}
+}
+
+//testimonials
+$(function() {
+  $("input[testimonials='testimonials']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#testimonials').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+var text = document.getElementById("testimonials").value.replace (/ +/g, " ");
+ const ftestimonials = document.querySelector('#testimonials');
+    ftestimonials.addEventListener('input', () => {
+      ftestimonials.value = ftestimonials.value ? ftestimonials.value.trimStart() : ''; 
+    })
+function validatetestimonials(){
+var nm = document.getElementById('testimonials').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('testimonialsdiv').innerHTML = "Not valid testimonials";
+document.getElementById('testimonialsdiv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('testimonialsdiv').innerHTML = "";
+document.getElementById('testimonialsdiv').style.color = "";
+return true;
+}
+}
+
+//noOfTestimonials
+$(document).ready(function() {
+    $('#noOfTestimonials').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const noOfTestimonials1 = document.querySelector('#noOfTestimonials');
+    noOfTestimonials1.addEventListener('input', () => {
+      noOfTestimonials1.value = noOfTestimonials1.value ? noOfTestimonials1.value.trimStart() : ''; 
+    })
+function validatenoOfTestimonials(){
+var noOfTestimonials = document.getElementById('noOfTestimonials').value;
+var pattern = /[0-9]/;     
+if((pattern.test(noOfTestimonials) == false || noOfTestimonials == "")){
+document.getElementById('noOfTestimonialsdiv').innerHTML = "Not valid number";
+document.getElementById('noOfTestimonialsdiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('noOfTestimonialsdiv').innerHTML = "";
+document.getElementById('noOfTestimonialsdiv').style.color = "";
+return true;
+}
+}
+
+//cflName
+$(function() {
+  $("input[cflName='cflName']").on('input', function(e) {
+    console.log('==>' , $(this).val().charAt(3))
+    if ($(this).val().indexOf("  ") != -1) {
+      $(this).val($(this).val().replace("  ", " "));
+      // $(this).val($(this).val().replace(".", ""));
+    } else {
+      $(this).val($(this).val().replace("", ""));
+    }
+     });
+});
+$(document).ready(function() {
+    $('#cflName').on('keypress', function(e) {
+        var regex = new RegExp("^[a-zA-Z ]*$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+function validatecflName(){
+var nm = document.getElementById('cflName').value;
+var pattern = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;    
+if(pattern.test(nm) == false || nm == " ")
+{
+document.getElementById('cflNamediv').innerHTML = "Not valid cflName";
+document.getElementById('cflNamediv').style.color = "red";
+return false;
+}
+else
+{
+document.getElementById('cflNamediv').innerHTML = "";
+document.getElementById('cflNamediv').style.color = "";
+return true;
+}
+}
+//programDuration
+$(document).ready(function() {
+    $('#programDuration').on('keypress', function(e) {
+        var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+});
+const programDuration1 = document.querySelector('#programDuration');
+    programDuration1.addEventListener('input', () => {
+      programDuration1.value = programDuration1.value ? programDuration1.value.trimStart() : ''; 
+    })
+function validateprogramDuration(){
+var programDuration = document.getElementById('programDuration').value;
+var pattern = /[0-9]/;     
+if((pattern.test(programDuration) == false || programDuration == "")){
+document.getElementById('programDurationdiv').innerHTML = "Not valid number";
+document.getElementById('programDurationdiv').style.color = "red";
+return false;
+}
+else{
+document.getElementById('programDurationdiv').innerHTML = "";
+document.getElementById('programDurationdiv').style.color = "";
+return true;
+}
+}
+
+
+// Add listeners to input fields to check for validation
+$('#state, #district, #gramPanchayat, #village, #campaignValue, #areaManager, #ngoName, #internalName, #contactInternal, #locationDetails, #contactDetails, #numberParticipants, #programTopic, #teachingMethod, #picture, #noOfPhotographs, #testimonials, #noOfTestimonials, #cflName, #programDuration').on('input', function() {
+  validateForm();
+});
+
+// Function to check if both input fields are valid
+function validateForm() {
+  var stateIsValid = validatestate();
+  var districtIsValid = validatedistrict();
+  var gramPanchayatIsValid = validategramPanchayat();
+  var villageIsValid = validatevillage();
+  var campaignValueIsValid = validatecampaignValue();
+  var areaManagerIsValid = validateareaManager();
+  var ngoNameIsValid = validatengoName();
+  var internalNameIsValid = validateinternalName();
+  var contactInternalIsValid = validatecontactInternal();
+  var locationDetailsIsValid = validatelocationDetails();
+  var externalNameIsValid = validateexternalName();
+  var contactDetailsIsValid = validatecontactDetails();
+  var numberParticipantsIsValid = validatenumberParticipants();
+  var pictureIsValid = validatepicture();
+  var noOfPhotographsIsValid = validatenoOfPhotographs();
+  var testimonialsIsValid = validatetestimonials();
+  var noOfTestimonialsIsValid = validatenoOfTestimonials();
+  var cflNameIsValid = validatecflName();
+  var programDurationIsValid = validateprogramDuration();
+  
+  if (stateIsValid && districtIsValid && gramPanchayatIsValid && villageIsValid && campaignValueIsValid && areaManagerIsValid && ngoNameIsValid && internalNameIsValid && contactInternalIsValid && locationDetailsIsValid && externalNameIsValid && contactDetailsIsValid && numberParticipantsIsValid && pictureIsValid && noOfPhotographsIsValid && testimonialsIsValid && noOfTestimonialsIsValid && cflNameIsValid && programDurationIsValid) {
+    $('#submit').prop('disabled', false);
+  } else {
+    $('#submit').prop('disabled', true);
+  }
+}
+
+    </script>
+  </body>
+</html>
